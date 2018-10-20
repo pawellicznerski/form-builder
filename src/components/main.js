@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Form from './Form';
+import FormBuilder from './FormBuilder';
 
 class Main extends Component{
   constructor(props){
@@ -29,7 +29,7 @@ class Main extends Component{
       )
     } else {
       return (
-          <Form/>
+          <FormBuilder/>
       )
     }
   }
