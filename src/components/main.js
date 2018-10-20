@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Form from './Form';
 
 class Main extends Component{
   constructor(props){
@@ -22,9 +23,15 @@ class Main extends Component{
 
   }
   render(){
-    return (
-        <button onClick={this.showForm.bind(this)}> New form</button>
-    )
+    if(this.state.showForms){
+      return (
+          <button onClick={this.showForm.bind(this)}> New form</button>
+      )
+    } else {
+      return (
+          <Form/>
+      )
+    }
   }
 }
  export default Main;
