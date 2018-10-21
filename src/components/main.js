@@ -18,7 +18,7 @@ class Main extends Component{
   changeState(){
   }
   componentDidMount(){
-    console.log("we are here");
+    console.log("component main did mount");
     // this.setState({showForms:!this.state.showForms});
 
   }

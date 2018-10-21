@@ -10,29 +10,31 @@ class FormBuilder extends Component{
         id:1,
         type:'text',
         question:"What car",
-        subform:{
+        subform:[{
           id:1,
           type:'text',
           question:"What car",
-        }
+          subform:[]
+        }]
       },{
         id:2,
         type:'text',
         question:"What car",
+        subform:[]
       }
-      ]
+     ]
     }
   }
 
 
   renderItems(form) {
-      return form.map((item, index) => <div>
-      <Form key={index} />
-      // this.renderItems(item)
-      </div>);
-      // return (
-      //   <Form/>
-      // )
+    if(!form.length)return ;
+      return form.map((item, index) => <div key={index}>
+      <Form
+        {...item}
+        />
+      {this.renderItems(item.subform)}
+       </div>);
   }
   render(){
     return(
