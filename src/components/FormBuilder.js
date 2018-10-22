@@ -72,26 +72,40 @@ class FormBuilder extends Component{
     // console.log("the whole state",this.state.form);
   }
   //
-  removeForm(id){
+  removeForm(id,actionType){
+    console.log("removefrom fn",id,actionType);
     const initialData= this.state.form?this.state.form:[];
-    const data = this.changeFormList(id,initialData);
-
+    const data = this.recursiveAction(id,initialData,actionType);
     // console.log("data after:",data);
     this.setState({form:[...data]})
   }
   //
-  changeFormList(id, data) {
-
+  recursiveAction(id, data, actionType) {
+    // console.log("removefrecursiveAction fn",id,actionType);
     for(let i = 0; i < data.length; i++) {
         if (data[i].id === id) {
-          data = [...data.slice(0,i),...data.slice(i + 1)]
+          // console.log("im heree");
+          data = this.setActionType(i,data,actionType)
+          // console.log("pokaż co obciołeś",data);
           return data;
         }else if (data[i].subform && data[i].subform.length) {
           // console.log("I found subform",data[i].subform);
-          data[i].subform =  this.changeFormList(id,data[i].subform);
-          return data;
+          const props = [id,data[i].subform,actionType]
+          const result =  this.recursiveAction(...props);
+          if(result){data[i].subform=result; return data;}
         }
+      // return data;
+    }
+  }
 
+  setActionType(i,data,actionType){
+    if(actionType==="remove"){
+      console.log("bingooo");
+      return [...data.slice(0,i),...data.slice(i + 1)]
+    } else if (actionType==="add"){
+      return [...data.slice(0,i),...data.slice(i + 1)]
+    } else if (actionType==="update"){
+      return [...data.slice(0,i),...data.slice(i + 1)]
     }
   }
 

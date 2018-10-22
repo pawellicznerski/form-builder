@@ -35,7 +35,7 @@ class Form extends Component{
     e.preventDefault();
     const id = this.props.id;
     // console.log("id in form",id);
-    this.props.removeForm(id);
+    this.props.removeForm(id,"remove");
   }
 showId(e){
   e.preventDefault();
