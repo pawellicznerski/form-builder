@@ -7,13 +7,13 @@ class Form extends Component{
   constructor(props){
     super(props)
     this.state={
-
-        id:this.props.id,
-        // type:this.props.type,
-        // question:this.props.question,
-        // condition:this.props.condition,
-        // subform:[this.props.subform]
-
+        form:{
+          id:this.props.id,
+          // type:this.props.type,
+          // question:this.props.question,
+          // condition:this.props.condition,
+          // subform:[this.props.subform]
+        }
     }
   }
   // handleChange(e) {
@@ -35,16 +35,17 @@ class Form extends Component{
     e.preventDefault();
     const id = this.props.id;
     // console.log("id in form",id);
-    this.props.removeForm(id,"remove");
+    this.props.removeForm(id);
   }
 showId(e){
   e.preventDefault();
-  const {id,type,question, condition} = this.state;
-  console.log("id", id, "props", [this.props]);
+  const {id,type,question, condition} = this.state.form;
+  console.log("id", id);
 }
 addForm(e){
   e.preventDefault();
-  this.props.addForm()
+  const id = this.props.id;
+  this.props.addForm(id,this.state.form)
 }
   render(){
     // console.log("it is rendered in form");
