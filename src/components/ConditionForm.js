@@ -11,7 +11,11 @@ class ConditionForm extends Component{
   renderOptions(){
     if(this.props.fatherType==='number'){
       return(
-        <select id="d">
+        <select
+          id="d"
+          onChange={this.props.handleChange.bind(this)}
+          name="condition"
+        >
           <option value="Equals">Equals</option>
           <option value="Grater">Grater than</option>
           <option value="Lower">Lower than</option>
@@ -19,7 +23,11 @@ class ConditionForm extends Component{
       )
     } else{
       return(
-        <select id="d">
+        <select
+          id="d"
+          onChange={this.props.handleChange.bind(this)}
+          name="condition"
+        >
           <option value="Equals">Equals</option>
           <option value="Unequals">Unequals</option>
         </select>
@@ -30,14 +38,22 @@ class ConditionForm extends Component{
   renderFatherValue(){
     if(this.props.fatherType==='radio'){
       return(
-        <select id="d">
+        <select
+          id="d"
+          onChange={this.props.handleChange.bind(this)}
+          name="condition"
+        >
           <option value="yes">yes</option>
           <option value="no">no</option>
         </select>
       )
     } else{
       return(<div>
-        <input value={this.props.value}/>
+        <input
+          value={this.props.value}
+          onChange={this.props.handleChange.bind(this)}
+          name="condition"
+          />
         </div>
       )
     }

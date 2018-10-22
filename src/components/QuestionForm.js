@@ -8,17 +8,14 @@ class QuestionForm extends Component{
     }
   }
 
-  renderOption(){
-    return(
-      <option>dupa</option>
-    )
-  }
-
   render(){
     return(
       <div>
       <label htmlFor="d">Question: </label>
-        <input value={this.props.question}></input>
+        <input
+          onChange={this.props.handleChange.bind(this)}
+          name='question'
+          value={this.props.question}></input>
       </div>
     )
   }

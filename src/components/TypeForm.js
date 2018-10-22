@@ -13,7 +13,11 @@ class SelectForm extends Component{
     return(
       <div>
        <label htmlFor="d">Type: </label>
-        <select id="d" defaultValue={type}>
+        <select
+          id="d"
+          defaultValue={type}
+          onChange={this.props.handleChange.bind(this)}
+          name='type'  >
           <option
             value="text"
             >text</option>

@@ -7,25 +7,25 @@ class Form extends Component{
   constructor(props){
     super(props)
     this.state={
-        form:{
-          id:this.props.id,
-          // type:this.props.type,
-          // question:this.props.question,
-          // condition:this.props.condition,
-          // subform:[this.props.subform]
-        }
+      value:'',
+      id:this.props.id,
+      type:this.props.type,
+      question:this.props.question,
+      condition:this.props.condition,
+      subform:[this.props.subform]
     }
   }
-  // handleChange(e) {
-  // this.setState({value: e.target.value});
-  // const target = e.target;
-  // const value = target.type === 'checkbox' ? target.checked : target.value;//potrzebne w razie dolączenia checkbox-a
-  // const name = target.name;
-  //
-  // this.setState({
-  //    [name]: value,
-  //  });
-  // }
+  handleChange(e) {
+  this.setState({value: e.target.value});
+  console.log(e.target.value,e.target.name);
+  const target = e.target;
+  const value = target.type === 'checkbox' ? target.checked : target.value;//potrzebne w razie dolączenia checkbox-a
+  const name = target.name;
+
+  this.setState({
+     [name]: value,
+   });
+  }
   // handleSubmit(e){
   //   e.preventDefault();
   //   console.log("what?",this.state.question,this.state.type);
@@ -39,24 +39,31 @@ class Form extends Component{
   }
 showId(e){
   e.preventDefault();
-  const {id,type,question, condition} = this.state.form;
-  console.log("id", id);
+  // const {id,type,question, condition} = this.state.form;
+  // console.log("id", id);
 }
 addForm(e){
   e.preventDefault();
-  const id = this.props.id;
-  this.props.addForm(id,this.state.form)
+  const {id,type,question,condition,subform} = this.state;
+  this.props.addForm(id,{id,type,question,condition,subform})
 }
   render(){
     // console.log("it is rendered in form");
-    const id = this.props.id;
+    const {question} = this.state;
     return(
       <form >
       <fieldset>
 
-        <ConditionForm fatherType="radio" value={4}/>
-        <QuestionForm question={this.props.id}/>
-        <TypeForm type="radio"/>
+        <ConditionForm
+          handleChange={this.handleChange.bind(this)}
+          fatherType="radio"
+          value={4}/>
+        <QuestionForm
+          handleChange={this.handleChange.bind(this)}
+          question={question}/>
+        <TypeForm
+          handleChange={this.handleChange.bind(this)}
+          type="radio"/>
 
         <button onClick={this.addForm.bind(this)}>Add subinput</button>
         <button onClick={this.removeForm.bind(this)}>Delete</button>

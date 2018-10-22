@@ -43,54 +43,7 @@ class FormBuilder extends Component{
       {this.renderItems(item.subform)}
        </div>);
   }
-  //
-  // actionHandler(id,actionType,newData){
-  //   // console.log("what",id, [actionType,newData]);
-  //   // console.log("removefrom fn",id,actionType);
-  //   const initialData= this.state.form?this.state.form:[];
-  //   const props = [id,initialData,actionType,newData];
-  //   const data = this.recursiveAction(...props);
-  //   // console.log("data after:",data);
-  //   this.setState({form:[...data]})
-  // }
-  // //
-  // recursiveAction(id, data, actionType,newData) {
-  //   // console.log("in recursive",id, data, actionType,newData);
-  //   // if(!data.length||!newData&&actionType==="add"){
-  //   //   newData=newData?newData:this.createDefaultForm();
-  //   //   data.push(newData);
-  //   //   return data;
-  //   // }
-  //   for(let i = 0; i < data.length; i++) {
-  //       if (data[i].id === id) {
-  //         // console.log("im heree");
-  //         data = this.doAction(i,data,actionType,newData)
-  //         // console.log("pokaż co obciołeś",data);
-  //         return data;
-  //       }else if (data[i].subform && data[i].subform.length) {
-  //         // console.log("I found subform",data[i].subform);
-  //         const props = [id,data[i].subform,actionType]
-  //         const result =  this.recursiveAction(...props);
-  //         if(result){data[i].subform=result; return data;}
-  //       }
-  //     // return data;
-  //   }
-  // }
 
-  // doAction(i,data,actionType,newData){
-  //   if(actionType==="remove"){
-  //     console.log("bingooo");
-  //     return [...data.slice(0,i),...data.slice(i + 1)]
-  //   } else if (actionType==="add"){
-  //     console.log("dupa");
-  //     // if(!data) this.state.form.push(newData);
-  //     // data=data.subform?data.subform:this.state.form;
-  //     // data.push(newData)
-  //     // return [...data.slice(0,i),...data.slice(i + 1)]
-  //   } else if (actionType==="update"){
-  //     return [...data.slice(0,i),...data.slice(i + 1)]
-  //   }
-  // }
 
   removeForm(id){
     const initialData= this.state.form?this.state.form:[];
