@@ -47,7 +47,7 @@ addForm(e){
   this.props.addForm()
 }
   render(){
-    console.log("it is rendered in form");
+    // console.log("it is rendered in form");
     const id = this.props.id;
     return(
       <form >

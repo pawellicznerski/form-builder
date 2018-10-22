@@ -12,7 +12,15 @@ class FormBuilder extends Component{
         type:'text',
         question:"first oner",
         condition:'',
-        subform:[]
+        subform:[
+          {
+            id:342,
+            type:'text',
+            question:"second one",
+            condition:'',
+            subform:[]
+          }
+        ]
       },{
         id:34,
         type:'text',
@@ -29,14 +37,14 @@ class FormBuilder extends Component{
     // console.log("form in reneder items",form);
     // if(!form)return ;
 
-    console.log("render item in buider",form);
+    // console.log("render item in buider",form);
       return form.map((item, index) => <div key={index}>
       <Form
         {...item}
         addForm={this.addForm.bind(this)}
         removeForm={this.removeForm.bind(this)}
         />
-      // {this.renderItems(item.subform)}
+      {this.renderItems(item.subform)}
        </div>);
   }
   // componentDidMount(){
@@ -65,53 +73,28 @@ class FormBuilder extends Component{
   }
   //
   removeForm(id){
-    const data= this.state.form?this.state.form:[]
-    if(data.length===1)
-    {console.log("dta.length jest 1");
-      this.setState({form:[]})}
-    else
-    console.log("data before:",data);
-    _.remove(data, item =>item.id===id);
-    console.log("data after:",data);
-    this.setState({form:[...data]})
+    const initialData= this.state.form?this.state.form:[];
+    const data = this.changeFormList(id,initialData);
 
-    // let data = this.changeFormList(id, this.state.form);
-    // // console.log("id in formbuider",id, "and data", data);
-    // // const changedForms =
-    // console.log("data before set state",data);
-    // this.setState({form:data});
-    // console.log(this.state.form);
+    // console.log("data after:",data);
+    this.setState({form:[...data]})
   }
   //
-  // changeFormList(id, data) {
-  //   console.log("data in change form",data, "id", id);
-  //     for(let i = 0; i < data.length; i++) {
-  //         if (data[i].id === id) {
-  //           console.log("dupa",[...data.slice(0,i),...data.slice(i + 1)]);
-  //           data = [...data.slice(0,i),...data.slice(i + 1)]
-  //           console.log("data po slice",data);
-  //         } else if (data[i].subform && data[i].subform.length) {
-  //           console.log("I found subform",data[i].subform);
-  //           data[i].subform =  this.changeFormList(id,data[i].subform);
-  //
-  //         }
-  //     }
-  //     console.log("ostatni return w change",data);
-  //     return data;
-  //
-  //
-  // }
+  changeFormList(id, data) {
 
-  // removeForm(id) {
-  //   return arr.find(a => {
-  //       if (a.children && a.children.length > 0) {
-  //           return a.id === id ? true : findById(a.children, id)
-  //       } else {
-  //           return a.id === id
-  //       }
-  //   })
+    for(let i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+          data = [...data.slice(0,i),...data.slice(i + 1)]
+          return data;
+        }else if (data[i].subform && data[i].subform.length) {
+          // console.log("I found subform",data[i].subform);
+          data[i].subform =  this.changeFormList(id,data[i].subform);
+          return data;
+        }
 
-// }
+    }
+  }
+
 
   render(){
       const {form} = this.state;
