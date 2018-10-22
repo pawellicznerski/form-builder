@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class TextForm extends Component{
+class QuestionForm extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -24,4 +24,4 @@ class TextForm extends Component{
   }
 }
 
-export default TextForm;
+export default QuestionForm;

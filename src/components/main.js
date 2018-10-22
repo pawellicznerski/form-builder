@@ -8,30 +8,24 @@ class Main extends Component{
       showForms:false
     }
   }
-  showForm(){
-    console.log("dupa");
-    console.log(this.state.showForms);
-    this.setState({showForms:!this.state.showForms});
-
-
-  }
-  changeState(){
-  }
-  componentDidMount(){
-    console.log("component main did mount");
-    // this.setState({showForms:!this.state.showForms});
-
-  }
+  // showForm(){
+  //   console.log("dupa");
+  //   console.log(this.state.showForms);
+  //   this.setState({showForms:!this.state.showForms});
+  //
+  //
+  // }
+  // changeState(){
+  // }
+  // componentDidMount(){
+  //   console.log("component main did mount");
+  //   // this.setState({showForms:!this.state.showForms});
+  //
+  // }
   render(){
-    if(this.state.showForms){
-      return (
-          <button onClick={this.showForm.bind(this)}> New form</button>
-      )
-    } else {
-      return (
-          <FormBuilder/>
-      )
-    }
+    return (
+        <FormBuilder/>
+    )
   }
 }
  export default Main;

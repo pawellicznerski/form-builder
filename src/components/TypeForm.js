@@ -13,18 +13,15 @@ class SelectForm extends Component{
     return(
       <div>
        <label htmlFor="d">Type: </label>
-        <select id="d" default={type}>
+        <select id="d" defaultValue={type}>
           <option
             value="text"
-            selected={type==="text"?true:false}
             >text</option>
           <option
             value="number"
-            selected={type==="number"?true:false}
             >number</option>
           <option
             value="radio"
-            selected={type==="radio"?true:false}
             >yes/no</option>
         </select>
       </div>

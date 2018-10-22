@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Main from './components/main';
+import FormBuilder from './components/FormBuilder';
 
 import './App.css';
 
@@ -9,7 +10,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           Form builder
-          <Main></Main>
+          <FormBuilder/>
         </header>
       </div>
     );

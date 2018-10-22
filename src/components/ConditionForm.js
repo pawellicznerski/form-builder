@@ -44,7 +44,7 @@ class ConditionForm extends Component{
   }
 
   render(){
-    console.log('ijiojwed', this.props.value);
+    // console.log('ijiojwed', this.props.value);
     if(this.props.fatherType){
       return(
         <div>
