@@ -18,7 +18,15 @@ class FormBuilder extends Component{
             type:'text',
             question:"second one",
             condition:'',
-            subform:[]
+            subform:[
+              {
+                id:239,
+                type:'text',
+                question:"second one",
+                condition:'',
+                subform:[]
+              }
+            ]
           }
         ]
       },{
@@ -33,14 +41,19 @@ class FormBuilder extends Component{
   }
 
 
-  renderItems(form) {
+  renderItems(form, layer) {
+    console.log("layer",layer);
+    console.log("typeof layer",typeof layer);
+    const i = layer===false||typeof layer !== "number"?0:layer+1;
+    console.log('i',i);
       return form.map((item, index) => <div key={index}>
       <Form
         {...item}
+        marginLeft={i}
         removeForm={this.removeForm.bind(this)}
         addForm={this.addForm.bind(this)}
         />
-      {this.renderItems(item.subform)}
+      {this.renderItems(item.subform,i)}
        </div>);
   }
 

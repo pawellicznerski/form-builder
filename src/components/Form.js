@@ -41,17 +41,25 @@ showId(e){
   e.preventDefault();
   // const {id,type,question, condition} = this.state.form;
   // console.log("id", id);
+  console.log("this.props.marginLeft",this.props.marginLeft);
 }
 addForm(e){
   e.preventDefault();
   const {id,type,question,condition,subform} = this.state;
   this.props.addForm("add",id,{id,type,question,condition,subform})
 }
+
+// <form style={{marginLeft:`${this.props.marginLeft*310}px`}}>
+
+
   render(){
     // console.log("it is rendered in form");
     const {question} = this.state;
+    const style = `${this.props.marginLeft*10}`;
+    console.log("style", style);
+    console.log("this.props.marginLeft", this.props.marginLeft);
     return(
-      <form >
+      <form style={{marginLeft:`${style}px`}}>
       <fieldset>
 
         <ConditionForm
