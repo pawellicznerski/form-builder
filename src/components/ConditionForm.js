@@ -8,13 +8,13 @@ class ConditionForm extends Component{
     }
   }
 
-  renderOptions(){
-    if(this.props.fatherType==='number'){
+  renderOptions(conditionType, conditionValue){
+    if(conditionType==='number'){
       return(
         <select
-          id="d"
+          id={this.props.id}
           onChange={this.props.handleChange.bind(this)}
-          name="condition"
+          name="conditionType"
         >
           <option value="Equals">Equals</option>
           <option value="Grater">Grater than</option>
@@ -24,9 +24,9 @@ class ConditionForm extends Component{
     } else{
       return(
         <select
-          id="d"
+          id={this.props.id}
           onChange={this.props.handleChange.bind(this)}
-          name="condition"
+          name="conditionType"
         >
           <option value="Equals">Equals</option>
           <option value="Unequals">Unequals</option>
@@ -35,24 +35,37 @@ class ConditionForm extends Component{
     }
   }
 
-  renderFatherValue(){
-    if(this.props.fatherType==='radio'){
+  renderFatherValue(conditionType, conditionValue){
+    if(conditionType==='radio'){
       return(
         <select
-          id="d"
           onChange={this.props.handleChange.bind(this)}
-          name="condition"
+          name="conditionValue"
+          defaultValue={conditionValue}
+          id={this.props.id}
         >
           <option value="yes">yes</option>
           <option value="no">no</option>
         </select>
       )
-    } else{
+    } else if(conditionType==='number'){
       return(<div>
         <input
-          value={this.props.value}
           onChange={this.props.handleChange.bind(this)}
-          name="condition"
+          name="conditionValue"
+          defaultValue={conditionValue}
+          id={this.props.id}
+          type='number'
+          />
+        </div>
+      )
+    } else {
+      return(<div>
+        <input
+          onChange={this.props.handleChange.bind(this)}
+          name="conditionValue"
+          defaultValue={conditionValue}
+          id={this.props.id}
           />
         </div>
       )
@@ -60,13 +73,14 @@ class ConditionForm extends Component{
   }
 
   render(){
-    // console.log('ijiojwed', this.props.value);
-    if(this.props.fatherType){
+    // console.log(' this.props.conditionType',  this.props.conditionType);
+    const {conditionType, conditionValue} = this.props
+    if(conditionType){
       return(
         <div>
-        <label htmlFor="d">Condition</label>
-          {this.renderOptions()}
-          {this.renderFatherValue()}
+        <label htmlFor={this.props.id}>Condition</label>
+          {this.renderOptions(conditionType, conditionValue)}
+          {this.renderFatherValue(conditionType, conditionValue)}
         </div>
       )
     } else{return null;}
