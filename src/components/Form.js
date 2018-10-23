@@ -35,7 +35,7 @@ class Form extends Component{
     e.preventDefault();
     const id = this.props.id;
     // console.log("id in form",id);
-    this.props.removeForm(id);
+    this.props.removeForm("remove",id);
   }
 showId(e){
   e.preventDefault();
@@ -45,7 +45,7 @@ showId(e){
 addForm(e){
   e.preventDefault();
   const {id,type,question,condition,subform} = this.state;
-  this.props.addForm(id,{id,type,question,condition,subform})
+  this.props.addForm("add",id,{id,type,question,condition,subform})
 }
   render(){
     // console.log("it is rendered in form");

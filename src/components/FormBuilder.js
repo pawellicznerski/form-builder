@@ -45,29 +45,13 @@ class FormBuilder extends Component{
   }
 
 
-  removeForm(id){
-    const initialData= this.state.form?this.state.form:[];
-    const updatedForm = this.recursiveAction(id, initialData);
-    // console.log("id",id, "updatedForm", updatedForm);
-    this.setState({form:[...updatedForm]})
-  }
-  recursiveAction(id, data) {
-    // console.log("data",data);
-    for(let i = 0; i < data.length; i++) {
-        if (data[i].id === id) {
-          // console.log("found...", data[i].id);
-          return [...data.slice(0,i),...data.slice(i + 1)]
-        }else if (data[i].subform && data[i].subform.length) {
-          const result =  this.recursiveAction(id,data[i].subform);
-          if(result){data[i].subform=result; return data;}
-        }
-      // return data;
-    }
-  }
+removeForm(actionType, id){
+  const initialData= this.state.form?this.state.form:[];
+  const updatedForm = this.recursiveAction(actionType,id, initialData);
+  this.setState({form:[...updatedForm]})
+}
 
-
-
-addForm(id,newData){
+addForm(actionType,id,newData){
   newData=newData.length?newData:this.createDefaultForm();
   const initialData= this.state.form?this.state.form:[];
   if(!id){
@@ -75,42 +59,42 @@ addForm(id,newData){
     this.setState({form:initialData})
     return;
   }
-  const updatedForm = this.recursiveAction2(id, initialData,newData);
+  const updatedForm = this.recursiveAction(actionType,id, initialData,newData);
   this.setState({form:[...updatedForm]})
   }
 
-  recursiveAction2(id, data, newData) {
-    for(let i = 0; i < data.length; i++) {
-        if (data[i].id == id) {
-          data[i].subform.push(newData);
-          return [...data];
-        }else if (data[i].subform && data[i].subform.length) {
-          const result =  this.recursiveAction2(id,data[i].subform,newData);
-          console.log('result',result);
-          if(result){data[i].subform=result; return data;}
-        }
-    }
-  }
-
-
-//
-updateForm(id,newData){
+updateForm(actionType,id,newData){
   const initialData= this.state.form?this.state.form:[];
-  const updatedForm = this.recursiveAction(id, initialData);
+  const updatedForm = this.recursiveAction(actionType,id, initialData, newData);
   // console.log("id",id, "updatedForm", updatedForm);
   this.setState({form:[...updatedForm]})
 }
-recursiveAction3(id, data) {
-  // console.log("data",data);
+
+
+
+recursiveAction(actionType,id, data, newData) {
+  console.log("data",data);
   for(let i = 0; i < data.length; i++) {
       if (data[i].id === id) {
-        // console.log("found...", data[i].id);
-        return [...data.slice(0,i),...data.slice(i + 1)]
+        const result=this.setTheReturnValue(actionType,data,i,newData);
+        return result;
       }else if (data[i].subform && data[i].subform.length) {
-        const result =  this.recursiveAction3(id,data[i].subform);
+        const result =  this.recursiveAction(actionType,id,data[i].subform,newData);
         if(result){data[i].subform=result; return data;}
       }
     // return data;
+  }
+}
+
+setTheReturnValue(actionType,data,i,newData){
+  console.log("actiontype",actionType);
+  if(actionType==="remove"){
+    return [...data.slice(0,i),...data.slice(i + 1)]
+  } else if(actionType==="update"){
+    return [...data.slice(0,i),newData,...data.slice(i + 1)]
+  } else if(actionType==="add"){
+    data[i].subform.push(newData);
+    return [...data];
   }
 }
 
@@ -136,7 +120,7 @@ recursiveAction3(id, data) {
     return(
        <div>
          {this.renderItems(form)}
-         <button onClick={this.addForm.bind(this,'',[])}>Add form</button>
+         <button onClick={this.addForm.bind(this,'add','',[])}>Add form</button>
        </div>
     )
   }

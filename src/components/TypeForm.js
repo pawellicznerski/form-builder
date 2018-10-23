@@ -17,7 +17,7 @@ class SelectForm extends Component{
           id="d"
           defaultValue={type}
           onChange={this.props.handleChange.bind(this)}
-          name='type'  >
+          name='type'>
           <option
             value="text"
             >text</option>
