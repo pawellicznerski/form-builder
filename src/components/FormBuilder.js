@@ -27,8 +27,9 @@ updateForm(actionType,id,value,nameOfNewData){
   const allData = [actionType,id, initialData, value,nameOfNewData];
   const updatedForm = this.recursiveAction(...allData);
   console.log("data from update",updatedForm);
+
   // console.log("id",id,typeof id, "updatedForm", updatedForm);
-  // this.setState({form:[...updatedForm]})
+  this.setState({form:[...updatedForm]})
 }
 
 recursiveAction(actionType,id, data, newData,nameOfNewData) {
@@ -53,38 +54,20 @@ setTheReturnValue(actionType,data,i,newData,nameOfNewData){
   if(actionType==="remove"){
     return [...data.slice(0,i),...data.slice(i + 1)]
   } else if(actionType==="update"){
-    console.log('before',data[i][nameOfNewData]);
     data[i][nameOfNewData]=newData;
-    // console.log('after',data[i][nameOfNewData]);
-    console.log("has children",  data[i].subform.length);
+    console.log('data[i][nameOfNewData]',data[i][nameOfNewData]);
+    if(nameOfNewData=="type"&&data[i].subform.length){
+      console.log('jeeeesteeee if');
 
-    if(data[i].subform.length){
       for (let j = 0; j < data[i].subform.length; j++) {
+        console.log('jeeeesteeee for');
 
-          console.log('data[i].subform[i]',data[i].subform[j]);
-          
+          console.log('data[i].subform[j]',data[i].subform[j]);
+          data[i].subform[j].conditionType=newData
+          console.log("newData, data[i].subform[j].conditionType", newData,data[i].subform[j].conditionType);
         }
     }
-  // console.log(Object.keys(data[i]))
-  //   // data[i].nameOfNewData=newData;
-  //   // if(Object.keys(data[i]))
-  //   console.log();
-  //   const keysArr =Object.keys(data[i]);
-  //   for (var j = 0; j < keysArr.length; j++) {
-  //     if(keysArr[j]==nameOfNewData) {
-  //       console.log("dupaaaaaaaaaaaaaaaaaaaaaaaa",keysArr[j]);
-  //       console.log('dupaaaaa2222222',data[j]);
-  //     }
-  //   }
-    // console.log(data[i].);
-    // _.find(data[i],(item)=> console.log('item name----',item))
-    // if(`${nameOfNewData}` in data){
-    //   if(myObj.hasOwnProperty(`${nameOfNewData}`)){
-    //
-    //   }
-    // }
-    // console.log("z set",data[i].nameOfNewData);
-    // return [...data.slice(0,i),newData,...data.slice(i + 1)]
+    return data;
   } else if(actionType==="add"){
     data[i].subform.push(newData);
     return [...data];
@@ -111,11 +94,11 @@ addForm(actionType,id,fatherType,fatherConditionValue){
 
   createDefaultForm(fatherType,fatherConditionValue){
     console.log('fatherType',fatherType);
-     const conditionOption= fatherType?fatherType:'text';
+     let conditionOption= fatherType?fatherType:'text';
     // console.log("conditionOption",conditionOption);
     // const defaultType =fatherType?fatherType:'';
       const id = Math.random().toString(16).slice(2);
-      const form = this.state;
+      // const form = this.state;
       const defaultForm ={
         id:id,
         type:'text',

@@ -56,9 +56,9 @@ class Form extends Component{
     const style = `${this.props.marginLeft*10}`;
     // const {conditionType,conditionValue,conditionOption} = this.state;
     const conditions = {
-      conditionType:this.state.conditionType,
-      conditionValue:this.state.conditionValue,
-      conditionOption:this.state.conditionOption
+      conditionType:this.props.conditionType,
+      conditionValue:this.props.conditionValue,
+      conditionOption:this.props.conditionOption
     }
     // console.log("jestem tu??");
     // console.log("this.props.marginLeft", this.props.marginLeft);

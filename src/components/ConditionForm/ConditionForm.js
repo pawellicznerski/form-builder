@@ -5,29 +5,10 @@ import ConditionFormOption from './__conditionForm_option/__conditionForm_option
 
 
 class ConditionForm extends Component{
-  // constructor(props){
-  //   super(props);
-  //   this.state={
-  //     conditionType:this.props.conditions.conditionType,
-  //     conditionValue:this.props.conditions.conditionValue,
-  //     conditionOption:this.props.conditions.conditionOption
-  //   }
-  // }
-
-  // handleMouseDown(item,optionStateName){
-  //   console.log('optionStateName---',optionStateName,'what-------',item);
-  //   this.setState({
-  //     [optionStateName]:item
-  //   })
-  //   this.props.handleMouseDown(item,optionStateName)
-  // }
-
 
   render(){
-    // console.log(' this.props.conditionType',  this.props.conditionType);
     const {conditionType, conditionValue,conditionOption,showDatalist} = this.props.conditions;
     if(conditionType){
-      // console.log('conditionType',conditionType);
       return(
         <div className="select">
         <label htmlFor={this.props.id}>Condition</label>

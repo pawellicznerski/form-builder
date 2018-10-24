@@ -32,7 +32,8 @@ export default class ConditionFormValue extends Component{
 
 
   renderValue(conditionType, conditionValue){
-    if(conditionType==='radio'){
+    console.log('conditionType',conditionType);
+    if(conditionType=='radio'){
       const selectOptions= ['yes', 'no'];
       return( this.renderTemplate(selectOptions,'conditionValue') )
     } else {
