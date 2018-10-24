@@ -37,3 +37,29 @@ recursiveAction3(id, data, newData) {
     // return data;
   }
 }
+
+
+    const oidjow=  return(
+        <select
+          id={this.props.id}
+          onChange={this.props.handleChange.bind(this)}
+          name="conditionType"
+        >
+          <option value="Equals">Equals</option>
+          <option value="Unequals">Unequals</option>
+        </select>
+      )
+
+
+    const oidjow=
+         return(
+            <select
+              id={this.props.id}
+              onChange={this.props.handleChange.bind(this)}
+              name="conditionType"
+            >
+              <option value="Equals">Equals</option>
+              <option value="Grater">Grater than</option>
+              <option value="Lower">Lower than</option>
+            </select>
+          )

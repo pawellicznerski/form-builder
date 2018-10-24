@@ -1,11 +1,26 @@
-.select_chosen{
-  cursor: pointer;
-  background-color: pink;
-  width: 100px;
+.select{
+  display: flex;
+  background-color: red;
+  width: 330px;
+  &_chosen{
+    cursor: pointer;
+    background-color: pink;
+    width: 100px;
+    margin: 10px;
+  }
+  &_wrapper{
+      background-color: green;
+    height:  48px;
+  }
 }
 
+// .dupa{
+//   background-color: green;
+//   padding-bottom: 2px;
+// }
+
 .select__datalist{
-  margin-top: 5px;
+  margin: -8px 10px ;
   // height: 100px;
   overflow-x: auto;
   width: 100px;

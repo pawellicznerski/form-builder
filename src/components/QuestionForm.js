@@ -4,8 +4,16 @@ class QuestionForm extends Component{
   constructor(props){
     super(props);
     this.state={
-
+       question: this.props.question
     }
+  }
+  handleChange(e) {
+  const {target} = e;
+  const value = target.type === 'checkbox' ? target.checked : target.value;
+  this.setState({
+     question: value,
+   });
+    this.props.handleChange(e.target.value,'question')
   }
 
   render(){
@@ -13,9 +21,9 @@ class QuestionForm extends Component{
       <div>
       <label htmlFor="d">Question: </label>
         <input
-          onChange={this.props.handleChange.bind(this)}
+          onChange={this.handleChange.bind(this)}
           name='question'
-          value={this.props.question}></input>
+          value={this.state.question}></input>
       </div>
     )
   }
