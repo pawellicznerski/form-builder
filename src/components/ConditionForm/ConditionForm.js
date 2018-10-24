@@ -5,21 +5,22 @@ import ConditionFormOption from './__conditionForm_option/__conditionForm_option
 
 
 class ConditionForm extends Component{
-  constructor(props){
-    super(props);
-    this.state={
-      conditionType:this.props.conditions.conditionType,
-      conditionValue:this.props.conditions.conditionValue,
-      conditionOption:this.props.conditions.conditionOption
-    }
-  }
+  // constructor(props){
+  //   super(props);
+  //   this.state={
+  //     conditionType:this.props.conditions.conditionType,
+  //     conditionValue:this.props.conditions.conditionValue,
+  //     conditionOption:this.props.conditions.conditionOption
+  //   }
+  // }
 
-  handleMouseDown(item,optionStateName){
-    console.log('optionStateName---',optionStateName,'what-------',item);
-    this.setState({
-      [optionStateName]:item
-    })
-  }
+  // handleMouseDown(item,optionStateName){
+  //   console.log('optionStateName---',optionStateName,'what-------',item);
+  //   this.setState({
+  //     [optionStateName]:item
+  //   })
+  //   this.props.handleMouseDown(item,optionStateName)
+  // }
 
 
   render(){
@@ -44,7 +45,7 @@ class ConditionForm extends Component{
             conditionOption={conditionOption}
             showDatalist={showDatalist}
 
-            handleMouseDown={this.handleMouseDown.bind(this)}
+            handleMouseDown={this.props.handleMouseDown.bind(this)}
             />
         </div>
       )

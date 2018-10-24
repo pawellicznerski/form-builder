@@ -3,19 +3,25 @@ const data = [
     id:232,
     type:'text',
     question:"first oner",
-    condition:{type:'',option:'',value:''},
+    conditionType:'',
+    conditionOption:'',
+    conditionValue:'',
     subform:[
       {
         id:233,
         type:'radio',
         question:"second one",
-        condition:{type:'text',option:'Equals',value:'car'},
+        conditionType:'text',
+        conditionOption:'Equals',
+        conditionValue:'car',
         subform:[
           {
             id:239,
             type:'radio',
             question:"second one",
-            condition:{type:'radio',option:'Equals',value:'yes'},
+            conditionType:'radio',
+            conditionOption:'Equals',
+            conditionValue:'yes',
             subform:[]
           },{
 

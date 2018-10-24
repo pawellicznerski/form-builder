@@ -11,9 +11,9 @@ class Form extends Component{
       id:this.props.id,
       type:this.props.type,
       question:this.props.question,
-      conditionType:this.props.condition.type,
-      conditionOption:this.props.condition.option,
-      conditionValue:this.props.condition.value,
+      conditionType:this.props.conditionType,
+      conditionOption:this.props.conditionOption,
+      conditionValue:this.props.conditionValue,
       subform:this.props.subform
     }
   }
@@ -23,6 +23,12 @@ class Form extends Component{
     this.setState({
       [optionStateName]:item
     })
+    this.createObjAndSend(optionStateName,item);
+  }
+
+  createObjAndSend(optionStateName,item){
+    const {id} = this.state;
+    this.props.updateForm("update",id,item,optionStateName)
   }
 
   removeForm(e){
@@ -30,17 +36,19 @@ class Form extends Component{
     const id = this.props.id;
     this.props.removeForm("remove",id);
   }
-showId(e){
-  e.preventDefault();
-  // const {id,type,question, condition} = this.state.form;
-  // console.log("id", id);
-  console.log("this.state",this.state);
-}
-addForm(e){
-  e.preventDefault();
-  const {id,conditionType} = this.state;
-  this.props.addForm("add",id,conditionType)
-}
+
+  showId(e){
+    e.preventDefault();
+    // const {id,type,question, condition} = this.state.form;
+    // console.log("id", id);
+    console.log("this.state",this.state);
+  }
+
+  addForm(e){
+    e.preventDefault();
+    const {id,conditionType,conditionValue} = this.state;
+    this.props.addForm("add",id,conditionType,conditionValue)
+  }
 
   render(){
     // console.log("it is rendered in form");

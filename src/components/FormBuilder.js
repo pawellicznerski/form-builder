@@ -12,8 +12,6 @@ class FormBuilder extends Component{
     }
   }
 
-
-
 removeForm(actionType, id){
   const initialData= this.state.form?this.state.form:[];
   const allData = [actionType,id, initialData];
@@ -55,7 +53,36 @@ setTheReturnValue(actionType,data,i,newData,nameOfNewData){
   if(actionType==="remove"){
     return [...data.slice(0,i),...data.slice(i + 1)]
   } else if(actionType==="update"){
-    // data[i].nameOfNewData=newData;
+    console.log('before',data[i][nameOfNewData]);
+    data[i][nameOfNewData]=newData;
+    // console.log('after',data[i][nameOfNewData]);
+    console.log("has children",  data[i].subform.length);
+
+    if(data[i].subform.length){
+      for (let j = 0; j < data[i].subform.length; j++) {
+
+          console.log('data[i].subform[i]',data[i].subform[j]);
+          
+        }
+    }
+  // console.log(Object.keys(data[i]))
+  //   // data[i].nameOfNewData=newData;
+  //   // if(Object.keys(data[i]))
+  //   console.log();
+  //   const keysArr =Object.keys(data[i]);
+  //   for (var j = 0; j < keysArr.length; j++) {
+  //     if(keysArr[j]==nameOfNewData) {
+  //       console.log("dupaaaaaaaaaaaaaaaaaaaaaaaa",keysArr[j]);
+  //       console.log('dupaaaaa2222222',data[j]);
+  //     }
+  //   }
+    // console.log(data[i].);
+    // _.find(data[i],(item)=> console.log('item name----',item))
+    // if(`${nameOfNewData}` in data){
+    //   if(myObj.hasOwnProperty(`${nameOfNewData}`)){
+    //
+    //   }
+    // }
     // console.log("z set",data[i].nameOfNewData);
     // return [...data.slice(0,i),newData,...data.slice(i + 1)]
   } else if(actionType==="add"){
@@ -64,11 +91,11 @@ setTheReturnValue(actionType,data,i,newData,nameOfNewData){
   }
 }
 
-addForm(actionType,id,fatherType){
-  const newData=this.createDefaultForm(fatherType);
+addForm(actionType,id,fatherType,fatherConditionValue){
+  const newData=this.createDefaultForm(fatherType,fatherConditionValue);
   const initialData= this.state.form?this.state.form:[];
   if(!id){
-    newData.condition.type='';
+    newData.conditionType='';
     initialData.push(newData);
     this.setState({form:initialData})
     return;
@@ -82,11 +109,10 @@ addForm(actionType,id,fatherType){
   }
 
 
-  createDefaultForm(fatherType){
+  createDefaultForm(fatherType,fatherConditionValue){
     console.log('fatherType',fatherType);
-    // const value = '';
-    const conditionOption= fatherType?fatherType:'text';
-    console.log("conditionOption",conditionOption);
+     const conditionOption= fatherType?fatherType:'text';
+    // console.log("conditionOption",conditionOption);
     // const defaultType =fatherType?fatherType:'';
       const id = Math.random().toString(16).slice(2);
       const form = this.state;
@@ -94,7 +120,9 @@ addForm(actionType,id,fatherType){
         id:id,
         type:'text',
         question:"Your question",
-        condition:{type:conditionOption,option:'',value:''},
+        conditionType:conditionOption,
+        conditionOption:'Equals',
+        conditionValue:'',
         subform:[]
       }
       return defaultForm;
