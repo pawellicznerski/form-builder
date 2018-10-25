@@ -7,7 +7,7 @@ import ConditionFormOption from './__conditionForm_option/__conditionForm_option
 class ConditionForm extends Component{
 
   render(){
-    const {conditionType, conditionValue,conditionOption,showDatalist} = this.props.conditions;
+    const {conditionType, id, conditionValue,conditionOption,showDatalist} = this.props.conditions;
     if(conditionType){
       return(
         <div className="select">
@@ -16,6 +16,7 @@ class ConditionForm extends Component{
             conditionType={conditionType}
             conditionValue={conditionValue}
             conditionOption={conditionOption}
+            id={id}
             showDatalist={showDatalist}
 
             handleMouseDown={this.props.handleMouseDown.bind(this)}
@@ -24,6 +25,7 @@ class ConditionForm extends Component{
             conditionType={conditionType}
             conditionValue={conditionValue}
             conditionOption={conditionOption}
+            id={id}
             showDatalist={showDatalist}
 
             handleMouseDown={this.props.handleMouseDown.bind(this)}

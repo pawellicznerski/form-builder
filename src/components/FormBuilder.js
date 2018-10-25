@@ -55,16 +55,16 @@ setTheReturnValue(actionType,data,i,newData,nameOfNewData){
     return [...data.slice(0,i),...data.slice(i + 1)]
   } else if(actionType==="update"){
     data[i][nameOfNewData]=newData;
-    console.log('data[i][nameOfNewData]',data[i][nameOfNewData]);
+    // console.log('data[i][nameOfNewData]',data[i][nameOfNewData]);
     if(nameOfNewData=="type"&&data[i].subform.length){
-      console.log('jeeeesteeee if');
+      // console.log('jeeeesteeee if');
 
       for (let j = 0; j < data[i].subform.length; j++) {
-        console.log('jeeeesteeee for');
+        // console.log('jeeeesteeee for');
 
-          console.log('data[i].subform[j]',data[i].subform[j]);
+          // console.log('data[i].subform[j]',data[i].subform[j]);
           data[i].subform[j].conditionType=newData
-          console.log("newData, data[i].subform[j].conditionType", newData,data[i].subform[j].conditionType);
+          // console.log("newData, data[i].subform[j].conditionType", newData,data[i].subform[j].conditionType);
         }
     }
     return data;
@@ -95,7 +95,7 @@ addForm(actionType,id,fatherType,fatherConditionValue){
   createDefaultForm(fatherType,fatherConditionValue){
     console.log('fatherType',fatherType);
      let conditionOption= fatherType?fatherType:'text';
-    // console.log("conditionOption",conditionOption);
+    console.log("conditionOption",conditionOption);
     // const defaultType =fatherType?fatherType:'';
       const id = Math.random().toString(16).slice(2);
       // const form = this.state;
@@ -128,7 +128,7 @@ addForm(actionType,id,fatherType,fatherConditionValue){
       {this.renderItems(item.subform,i)}
        </div>);
   }
-
+g
   render(){
       const {form} = this.state;
       // console.log("data from render Fbuilder",form);

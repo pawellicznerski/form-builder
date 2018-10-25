@@ -24,6 +24,7 @@ class Form extends Component{
       [optionStateName]:item
     })
     this.createObjAndSend(optionStateName,item);
+    console.log("all form", this.state);
   }
 
   createObjAndSend(optionStateName,item){
@@ -46,8 +47,9 @@ class Form extends Component{
 
   addForm(e){
     e.preventDefault();
-    const {id,conditionType,conditionValue} = this.state;
-    this.props.addForm("add",id,conditionType,conditionValue)
+    const {id,conditionType,conditionValue,type} = this.state;
+    console.log("conditionType in addForm in Form ----",type);
+    this.props.addForm("add",id,type,conditionValue)
   }
 
   render(){
@@ -58,17 +60,17 @@ class Form extends Component{
     const conditions = {
       conditionType:this.props.conditionType,
       conditionValue:this.props.conditionValue,
-      conditionOption:this.props.conditionOption
+      conditionOption:this.props.conditionOption,
+      id:this.props.id
     }
-    // console.log("jestem tu??");
+    console.log("jestem tu??id",conditions.id);
     // console.log("this.props.marginLeft", this.props.marginLeft);
     return(
       <form style={{marginLeft:`${style}px`,}}>
       <fieldset>
         <ConditionForm
           handleMouseDown={this.handleChange.bind(this)}
-          conditions={conditions}
-          id={this.props.id}/>
+          conditions={conditions}/>
         <QuestionForm
           handleChange={this.handleChange.bind(this)}
           question={question}/>

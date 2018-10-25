@@ -33,7 +33,9 @@ const data = [
     id:234,
     type:'text',
     question:"second one",
-    condition:{type:'',option:'',value:''},
+    conditionType:'',
+    conditionOption:'',
+    conditionValue:'',
     subform:[]
     },
     {
