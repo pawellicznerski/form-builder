@@ -19,12 +19,12 @@ class Form extends Component{
   }
 
   handleChange(item,optionStateName){
-    console.log("item", item);
+    // console.log("item", item);
     this.setState({
       [optionStateName]:item
     })
     this.createObjAndSend(optionStateName,item);
-    console.log("all form", this.state);
+    // console.log("all form", this.state);
   }
 
   createObjAndSend(optionStateName,item){
@@ -48,7 +48,7 @@ class Form extends Component{
   addForm(e){
     e.preventDefault();
     const {id,conditionType,conditionValue,type} = this.state;
-    console.log("conditionType in addForm in Form ----",type);
+    // console.log("conditionType in addForm in Form ----",type);
     this.props.addForm("add",id,type,conditionValue)
   }
 
@@ -63,7 +63,7 @@ class Form extends Component{
       conditionOption:this.props.conditionOption,
       id:this.props.id
     }
-    console.log("jestem tu??id",conditions.id);
+    // console.log("jestem tu??id",conditions.id);
     // console.log("this.props.marginLeft", this.props.marginLeft);
     return(
       <form style={{marginLeft:`${style}px`,}}>

@@ -2,6 +2,13 @@ import React, {Component} from 'react';
 import Form from './Form';
 import _ from 'lodash';
 import data from './data';
+import idb from 'idb';
+
+// await idb.open(…);
+
+const name = 'mydbname'
+const version = 1 //versions start at 1
+idb.open(name, version, upgradeDb => {})
 
 
 class FormBuilder extends Component{

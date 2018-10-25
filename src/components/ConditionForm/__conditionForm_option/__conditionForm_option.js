@@ -33,7 +33,7 @@ export default class ConditionFormOption extends Component{
     }
 
   renderOptions(conditionType, conditionValue){
-    console.log('conditionType of',this.props.id,"::",conditionType);
+    // console.log('conditionType of',this.props.id,"::",conditionType);
     if(conditionType=='number'){
       const selectOptions= ['Equals', 'Grater', 'Lower'];
      return(this.renderTemplate(selectOptions,'conditionOption') );
