@@ -11,74 +11,39 @@ class FormBuilder extends Component{
   constructor(props){
     super(props);
     this.state={
-      form:''
+      form:'',
     }
   }
   componentDidMount(){
-            let self = '';
-            // all the variables to run our database
-            // let self;
-            console.log("selfjeden---",self);
-            var database, idb_request;
-            // request to open the specified database by name and version number
-            // if version number changes, the database is updated
+            let database, idb_request;
             idb_request = window.indexedDB.open("form-db", 1);
-            // if there is an error, tell the user
             idb_request.addEventListener("error", function(event) {
               alert("Could not open Indexed DB due to error: " + this.errorCode);
             });
-            /* if the database you specified cannot be found or the version number
-            is old, you will need an upgrade to create the new database schema */
 // UPGRADEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
             idb_request.onupgradeneeded = function(event) {
-              /* Here we create a new object store called data, and give it an auto-
-              generated key path */
               var storage = this.result.createObjectStore("formData", { autoIncrement: true });
-              // add an object to the "formData" objectStore with the key, "form"
               storage.add(data, "form");
               alert("Creating a new database!");
             };
-            // if you successfully open the database use this callback function
   // SUCCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-            idb_request.onsuccess = (event)=> {
-              console.log("self---",self);
-
-
-              database = this.result;// store the database for later use
-              // now we are going to use some data from our database
-              console.log("new database",this.result.transaction('formData','readwrite').objectStore('formData').get("form"));
-              // window.indexedDB.deleteDatabase("form-db");
-              // database.close();
-
-              // return;
-
-
+            idb_request.onsuccess = (event) => {
+              database = idb_request.result;
               let storage = database.transaction("formData", "readwrite").objectStore("formData");
 
               storage.get("form").onsuccess = (event)=> {
-                console.log("database.result",database.result);
-          //  that.setState({
-          //     form:self
-          //   })
-          self = this.result;
-                console.log("seljoijf---",self);
-                // background = document.body.style.backgroundColor = this.result.color;
-                // document.getElementById("date").innerHTML = this.result.date;
-                // presses = document.getElementById("presses").innerHTML = this.result.presses;
-                // this.result.date = new Date().toString();
-                // storage.put(this.result, "form");
+                // console.log("storage.result>>>>>>>",event.target.result);
+              this.setState({
+                form:event.target.result
+                })
               };
-              console.log("storage=====", storage);
-              alert("Successfully opened database!");
-              database.transaction.oncomplete = function(){
+
+
+
+              database.transaction.oncomplete = () =>{
                     database.close();
                 }
             };
-            console.log("ostatni self", self);
-
-            // this.setState({
-            //   form:self
-            // })
   // FORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
             // // all the variables to run our application
             // var buttons, background, presses;
@@ -122,18 +87,45 @@ class FormBuilder extends Component{
             // }
   }
 
-fetchedDataToForm(data){
-  this.setState({
-    form:data
-  })
-}
+  handleDBUpdate(updatedForm){
+    let database, idb_request;
+    idb_request = window.indexedDB.open("form-db", 1);
+    idb_request.addEventListener("error", function(event) {
+      alert("Could not open Indexed DB due to error: " + this.errorCode);
+    });
+// UPGRADEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    idb_request.onupgradeneeded = function(event) {
+      var storage = this.result.createObjectStore("formData", { autoIncrement: true });
+      storage.add(data, "form");
+      alert("Creating a new database!");
+    };
+// SUCCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    idb_request.onsuccess = (event) => {
+      database = idb_request.result;
+      let storage = database.transaction("formData", "readwrite").objectStore("formData");
+
+      storage.get('form').onsuccess = function(event) {
+        // console.log("FormBuilderStore:::::::",this.result);
+        //
+        this.result.date = updatedForm;
+        storage.delete(this.result, "form");
+      };
+
+      database.transaction.oncomplete = () =>{
+            database.close();
+        }
+    };
+  }
+
+
 
 removeForm(actionType, id){
   const initialData= this.state.form?this.state.form:[];
   const allData = [actionType,id, initialData];
   const updatedForm = this.recursiveAction(...allData);
-  console.log("data from remove",updatedForm);
+  // console.log("data from remove",updatedForm);
   this.setState({form:[...updatedForm]})
+  this.handleDBUpdate(updatedForm);
 }
 
 
@@ -142,8 +134,7 @@ updateForm(actionType,id,value,nameOfNewData){
   const initialData= this.state.form?this.state.form:[];
   const allData = [actionType,id, initialData, value,nameOfNewData];
   const updatedForm = this.recursiveAction(...allData);
-  console.log("data from update",updatedForm);
-
+  // console.log("data from update",updatedForm);
   // console.log("id",id,typeof id, "updatedForm", updatedForm);
   this.setState({form:[...updatedForm]})
 }
@@ -152,7 +143,6 @@ recursiveAction(actionType,id, data, newData,nameOfNewData) {
   // console.log("data",data);
   for(let i = 0; i < data.length; i++) {
       if (data[i].id == id) {
-
         const allData =[actionType,data,i,newData,nameOfNewData]
         const result=this.setTheReturnValue(...allData);
         return result;
@@ -174,13 +164,9 @@ setTheReturnValue(actionType,data,i,newData,nameOfNewData){
     // console.log('data[i][nameOfNewData]',data[i][nameOfNewData]);
     if(nameOfNewData=="type"&&data[i].subform.length){
       // console.log('jeeeesteeee if');
-
       for (let j = 0; j < data[i].subform.length; j++) {
         // console.log('jeeeesteeee for');
-
-          // console.log('data[i].subform[j]',data[i].subform[j]);
           data[i].subform[j].conditionType=newData
-          // console.log("newData, data[i].subform[j].conditionType", newData,data[i].subform[j].conditionType);
         }
     }
     return data;
@@ -244,7 +230,7 @@ addForm(actionType,id,fatherType,fatherConditionValue){
       {this.renderItems(item.subform,i)}
        </div>);
   }
-g
+
   render(){
       const {form} = this.state;
       // console.log("data from render Fbuilder",form);
