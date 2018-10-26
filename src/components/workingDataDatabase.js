@@ -134,3 +134,84 @@
         }
       });
     }
+
+
+    (function () {
+
+  var DEFAULT_DEPTH = 500;
+
+  var output = document.getElementById('output');
+  var form = document.getElementById('form');
+  var submit = document.getElementById('submit');
+  var depthInput = document.getElementById('depth_input');
+  form.onsubmit = function (e) {
+    e.preventDefault();
+  }
+  submit.onclick = function (e) {
+    testIt();
+    e.preventDefault();
+  }
+  depthInput.value = DEFAULT_DEPTH;
+
+  function log(msg) {
+    output.innerHTML = output.innerHTML || '';
+    output.innerHTML += "\n" + (msg || '');
+  }
+  function createDeeplyNestedObject(depth) {
+    var obj = {id: 'foo'};
+    var key = obj;
+    for (var i = 0; i < depth; i++) {
+      key = key[i] = {};
+    }
+    return obj;
+  }
+
+  function testIt() {
+
+    log();
+
+    var req = indexedDB.open('test', 1);
+
+    req.onupgradeneeded = function (e) {
+      var db = e.target.result;
+
+      if (db.objectStoreNames.contains('test')) {
+        db.deleteObjectStore('test');
+      };
+
+      db.createObjectStore('test', {keyPath: 'id'});
+    }
+    req.onsuccess = function (e) {
+      var db = e.target.result;
+
+      var depth = parseInt(depthInput.value, 10);
+      log('Building a deeply-nested object of depth ' + depth + '...');
+      var obj = createDeeplyNestedObject(depth);
+      log('Built a deeply-nested object.');
+      var txn = db.transaction(['test'], 'readwrite');
+
+      log('Trying to insert deeply-nested object...');
+      var putReq = txn.objectStore('test').put(obj);
+      putReq.onsuccess = function() {
+        log('Successfully inserted deeply-nested object');
+        var getReq = txn.objectStore('test').get('foo');
+        getReq.onsuccess = function () {
+          log('Successfully retrieved deeply-nested object');
+        }
+        getReq.onerror = log;
+      }
+
+      putReq.onerror = log;
+
+      txn.oncomplete = function () {
+        log('Transaction finished');
+      };
+      txn.onerror = log;
+    };
+
+    req.onerror = log;
+  }
+
+  testIt();
+
+})();

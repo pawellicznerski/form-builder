@@ -3,8 +3,17 @@ import Form from './Form';
 import _ from 'lodash';
 import data  from './data';
 
-
-
+// const obj2 = createDeeplyNestedObject(10);
+//
+// function createDeeplyNestedObject(depth) {
+//   var obj = {id: 'foo'};
+//   var key = obj;
+//   for (var i = 0; i < depth; i++) {
+//     key = key[i] = {};
+//   }
+//   return obj;
+// }
+// console.log('object::::',obj2);
 
 
 class FormBuilder extends Component{
@@ -22,17 +31,22 @@ class FormBuilder extends Component{
             });
 // UPGRADEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
             idb_request.onupgradeneeded = function(event) {
+              // console.log("thissssssssssssssss",this);
               var storage = this.result.createObjectStore("formData", { autoIncrement: true });
-              storage.add(data, "form");
+              storage.add(data,"form");
               alert("Creating a new database!");
             };
   // SUCCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
             idb_request.onsuccess = (event) => {
+              // window.indexedDB.deleteDatabase("form-db");
+              // database =  idb_request.result;
+              // console.log(idb_request);
+              //
               database = idb_request.result;
               let storage = database.transaction("formData", "readwrite").objectStore("formData");
 
               storage.get("form").onsuccess = (event)=> {
-                // console.log("storage.result>>>>>>>",event.target.result);
+                console.log("storage.result>>>>>>>",event.target.result);
               this.setState({
                 form:event.target.result
                 })
@@ -95,7 +109,7 @@ class FormBuilder extends Component{
     });
 // UPGRADEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     idb_request.onupgradeneeded = function(event) {
-      var storage = this.result.createObjectStore("formData", { autoIncrement: true });
+      let storage = this.result.createObjectStore("formData", { autoIncrement: true });
       storage.add(data, "form");
       alert("Creating a new database!");
     };
@@ -105,10 +119,9 @@ class FormBuilder extends Component{
       let storage = database.transaction("formData", "readwrite").objectStore("formData");
 
       storage.get('form').onsuccess = function(event) {
-        // console.log("FormBuilderStore:::::::",this.result);
+        console.log("FormBuilderStore:::::::",this.result);
         //
-        this.result.date = updatedForm;
-        storage.delete(this.result, "form");
+        storage.delete(this.result[2], "form");
       };
 
       database.transaction.oncomplete = () =>{
@@ -122,10 +135,12 @@ class FormBuilder extends Component{
 removeForm(actionType, id){
   const initialData= this.state.form?this.state.form:[];
   const allData = [actionType,id, initialData];
+
   const updatedForm = this.recursiveAction(...allData);
   // console.log("data from remove",updatedForm);
   this.setState({form:[...updatedForm]})
   this.handleDBUpdate(updatedForm);
+
 }
 
 
