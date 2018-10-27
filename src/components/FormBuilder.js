@@ -3,6 +3,7 @@ import Form from './Form';
 import _ from 'lodash';
 import data  from './data';
 
+
 // const obj2 = createDeeplyNestedObject(10);
 //
 // function createDeeplyNestedObject(depth) {
@@ -24,104 +25,36 @@ class FormBuilder extends Component{
     }
   }
   componentDidMount(){
-            let database, idb_request;
-            idb_request = window.indexedDB.open("form-db", 1);
-            idb_request.addEventListener("error", function(event) {
-              alert("Could not open Indexed DB due to error: " + this.errorCode);
-            });
-// UPGRADEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            idb_request.onupgradeneeded = function(event) {
-              // console.log("thissssssssssssssss",this);
-              var storage = this.result.createObjectStore("formData", { autoIncrement: true });
-              storage.add(data,"form");
-              alert("Creating a new database!");
-            };
-  // SUCCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-            idb_request.onsuccess = (event) => {
-              // window.indexedDB.deleteDatabase("form-db");
-              // database =  idb_request.result;
-              // console.log(idb_request);
-              //
-              database = idb_request.result;
-              let storage = database.transaction("formData", "readwrite").objectStore("formData");
-
-              storage.get("form").onsuccess = (event)=> {
-                console.log("storage.result>>>>>>>",event.target.result);
-              this.setState({
-                form:event.target.result
-                })
-              };
-
-
-
-              database.transaction.oncomplete = () =>{
-                    database.close();
-                }
-            };
-  // FORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-            // // all the variables to run our application
-            // var buttons, background, presses;
-            // // get the array of buttons, which are just a elements:
-            // buttons = document.querySelectorAll("a");
-            // // set presses equal to zero (this will be reset if our database loads):
-            // presses = 0;
-            // // loop through all the buttons:
-            // for (let index = buttons.length - 1; index > -1; -- index) {
-            //   // add a click listener to each button:
-            //   buttons[index].addEventListener("click", function(event) {
-            //     // Clear the database if the X button is pressed:
-            //     if (database && this.innerHTML == "X") {
-            //       window.indexedDB.deleteDatabase("indexed-db");
-            //       database = undefined;
-            //       // set up html for the white screen after deleting database
-            //       document.getElementById("button-container").style.visibility = "hidden";
-            //       document.querySelector("h1").innerHTML = "You just deleted the database! Refresh the page to create a new one.";
-            //       document.querySelector("h1").style = "color:" + background;
-            //       document.body.style.backgroundColor = "#ffffff";
-            //       return;
-            //     } else if (database) { // if the database was established
-            //       presses ++;
-            //       // when a button is clicked, store its background color for saving:
-            //       background = this.style.backgroundColor;
-            //       // change the background color of the page to the button's color:
-            //       document.body.style.backgroundColor = background;
-            //       document.getElementById("presses").innerHTML = presses;
-            //       // save the new data to the database in the objectStore, "data"
-            //       var storage = database.transaction("data", "readwrite").objectStore("data");
-            //       // get returns the object pointed to by the key, "form"
-            //       storage.get("form").addEventListener("success", function(event) {
-            //         // this.result is the object "form" was pointing to
-            //         this.result.color = background;
-            //         this.result.presses = presses;
-            //         // put writes the changed object back to the "data" objectStore
-            //         storage.put(this.result, "form");
-            //       });
-            //     }
-            //   });
-            // }
-  }
-
-  handleDBUpdate(updatedForm){
-    let database, idb_request;
-    idb_request = window.indexedDB.open("form-db", 1);
-    idb_request.addEventListener("error", function(event) {
+    let database, request;
+    request = window.indexedDB.open("form-db", 1);
+    request.onerror= (event) => {
       alert("Could not open Indexed DB due to error: " + this.errorCode);
-    });
+    };
 // UPGRADEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-    idb_request.onupgradeneeded = function(event) {
-      let storage = this.result.createObjectStore("formData", { autoIncrement: true });
-      storage.add(data, "form");
+    request.onupgradeneeded = function(event) {
+      // console.log("thissssssssssssssss",this);
+      let storage =event.target.result.createObjectStore("formData", { autoIncrement: true });
+      // var myId = storage.createIndex("by_id", "id", {unique: true});
+      // var subformIndex = storage.createIndex("by_subform", "author");
+      console.log("ekdopekd data", data);
+      storage.put(data, 'formData');
+      console.log("storageeeeeeeeeeee", storage);
       alert("Creating a new database!");
     };
-// SUCCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-    idb_request.onsuccess = (event) => {
-      database = idb_request.result;
+  // SUCCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    request.onsuccess = (event) => {
+      // window.indexedDB.deleteDatabase("form-db");
+      // database =  request.result;
+      // console.log("this.resultifjoiwejfoijwe",event.target.result);
+
+      database =  request.result;
       let storage = database.transaction("formData", "readwrite").objectStore("formData");
 
-      storage.get('form').onsuccess = function(event) {
-        console.log("FormBuilderStore:::::::",this.result);
-        //
-        storage.delete(this.result[2], "form");
+      storage.get("formData").onsuccess = (event)=> {
+        console.log("storage.result>>>>>>>",event.target.result);
+      this.setState({
+        form:event.target.result
+        })
       };
 
       database.transaction.oncomplete = () =>{
@@ -130,6 +63,23 @@ class FormBuilder extends Component{
     };
   }
 
+  handleDBUpdate(updatedForm){
+    let database, request;
+    request = window.indexedDB.open("form-db", 1);
+    request.addEventListener("error", function(event) {
+      alert("Could not open Indexed DB due to error: " + this.errorCode);
+    });
+    request.onsuccess = (event) => {
+      let db = event.target.result;
+      let storage = db.transaction("formData", "readwrite").objectStore("formData");
+      storage.get("formData").addEventListener("success", function(event) {
+        storage.put(updatedForm, "formData");
+      });
+      db.transaction.oncomplete = () =>{
+            database.close();
+        }
+  }
+}
 
 
 removeForm(actionType, id){
@@ -152,6 +102,8 @@ updateForm(actionType,id,value,nameOfNewData){
   // console.log("data from update",updatedForm);
   // console.log("id",id,typeof id, "updatedForm", updatedForm);
   this.setState({form:[...updatedForm]})
+  this.handleDBUpdate(updatedForm);
+
 }
 
 recursiveAction(actionType,id, data, newData,nameOfNewData) {
@@ -202,10 +154,12 @@ addForm(actionType,id,fatherType,fatherConditionValue){
   }
   const allData = [actionType,id, initialData,newData];
   let updatedForm = this.recursiveAction(...allData);
-  console.log("data from add",updatedForm);
+  // console.log("data from add",updatedForm);
 
   if(!updatedForm)updatedForm=[];
   this.setState({form:[...updatedForm]})
+  this.handleDBUpdate(updatedForm);
+
   }
 
 
