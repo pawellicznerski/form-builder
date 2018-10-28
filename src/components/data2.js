@@ -1,5 +1,4 @@
-const data = [
-    {
+const data2 =    {
     id:232,
     type:'text',
     question:"first oner",
@@ -29,15 +28,6 @@ const data = [
         ]
       }
     ]
-    },{
-    id:234,
-    type:'text',
-    question:"second one",
-    conditionType:'',
-    conditionOption:'',
-    conditionValue:'',
-    subform:[]
     }
-]
 
-export default data;
+export default data2;
