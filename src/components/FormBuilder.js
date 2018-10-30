@@ -44,7 +44,8 @@ class FormBuilder extends Component{
       //     conditionValue:'',
       //     subform:[]
       //   });
-      store.put(data2);
+      console.log('gggggggggggggggggg', data2, ...data2);
+      store.put(...data2);
 
       // store.put({title: "Quarry Memories", author: "Fred", isbn: 123456});
       // store.put({title: "Water Buffaloes", author: "Fred", isbn: 234567});
